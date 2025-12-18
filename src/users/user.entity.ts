@@ -63,9 +63,10 @@ export class User {
   role: UserRole;
 
   @ManyToOne(() => Brand, (brand) => brand.users, {
-    nullable: true,
-  })
-  brand: Brand;
+  nullable: true,
+})
+brand: Brand;
+
 
   @OneToMany(() => Brand, (brand) => brand.createdBy)
   createdBrands: Brand[];
