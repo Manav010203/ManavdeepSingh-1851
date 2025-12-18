@@ -20,9 +20,11 @@
 //   }
 // }
 import * as bcrypt from 'bcrypt';
+import { UserRole } from 'src/users/user-role.enum';
+import { User } from 'src/users/user.entity';
 import { DataSource } from 'typeorm';
-import { User } from '../users/user.entity';
-import { UserRole } from '../users/user-role.enum';
+// import { User } from '../users/user.entity';
+// import { UserRole } from '../users/user-role.enum';
 
 export async function seedAdmin(dataSource: DataSource) {
   const repo = dataSource.getRepository(User);
