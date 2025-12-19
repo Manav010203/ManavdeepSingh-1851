@@ -1,17 +1,51 @@
+// import {
+//   Entity,
+//   PrimaryGeneratedColumn,
+//   Column,
+//   CreateDateColumn,
+//   UpdateDateColumn,
+// } from 'typeorm';
+
+// export enum UserRole {
+//   ADMIN = 'ADMIN',
+//   BRAND = 'BRAND',
+// }
+
+// @Entity({ name: 'users' })
+// export class User {
+//   @PrimaryGeneratedColumn()
+//   id: number;
+
+//   @Column({ unique: true })
+//   email: string;
+
+//   @Column()
+//   password: string;
+
+//   @Column({
+//     type: 'enum',
+//     enum: UserRole,
+//     default: UserRole.BRAND,
+//   })
+//   role: UserRole;
+
+//   @CreateDateColumn({ name: 'created_at' })
+//   createdAt: Date;
+
+//   @UpdateDateColumn({ name: 'updated_at' })
+//   updatedAt: Date;
+// }
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
 } from 'typeorm';
+import { Brand } from '../brands/brand.entity';
+import { UserRole } from './user-role.enum';
 
-export enum UserRole {
-  ADMIN = 'ADMIN',
-  BRAND = 'BRAND',
-}
-
-@Entity({ name: 'users' })
+@Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,13 +59,14 @@ export class User {
   @Column({
     type: 'enum',
     enum: UserRole,
-    default: UserRole.BRAND,
   })
   role: UserRole;
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  @ManyToOne(() => Brand, (brand) => brand.users, {
+    nullable: true,
+  })
+  brand: Brand;
 
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  @OneToMany(() => Brand, (brand) => brand.createdBy)
+  createdBrands: Brand[];
 }
